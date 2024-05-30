@@ -1,5 +1,5 @@
 import { Draw } from '@mui/icons-material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, ReactNode } from 'react'
 import { Box, useMediaQuery, Typography,styled } from "@mui/material";
 import { useTheme } from '@emotion/react';
 import DrawerToggle from '../../components/PrimaryDraw/DrawToggle';
@@ -7,7 +7,18 @@ import { easing } from '@mui/material/styles/createTransitions';
 import MuiDrawer from "@mui/material/Drawer"
 // import styled from '@emotion/styled/macro';
 
-function PrimaryDraw() {
+type Props = {
+  children: ReactNode;
+};
+
+
+type ChildProps = {
+  open: Boolean;
+};
+
+type ChildElement = React.ReactElement<ChildProps>;
+
+const PrimaryDraw: React.FC<Props> = ({ children }) => {
   const below600 = useMediaQuery("(max-width:599px)")
   const theme = useTheme()
   const [open, setOpen] = useState(!below600)
@@ -41,7 +52,7 @@ function PrimaryDraw() {
       "& . MuiDrawer-paper": openedMixin(),
     }),
     ...(!open && {
-      ...openedMixin(),
+      ...closedMixin(),
       "& . MuiDrawer-paper": closedMixin(),
     }),
   }))
@@ -89,12 +100,15 @@ function PrimaryDraw() {
           handleDrawerClose={handleDrawerClose}
           handleDrawerOpen={handleDrawerOpen} />
 
-          {[...Array(50)].map((_,i) => (
-            <Typography key={i} paragraph>
-                {i+1}
-            </Typography>
-        ))}
+          
+
+          
         </Box>
+        {React.Children.map(children, (child) => {
+            return React.isValidElement(child)
+            ? React.cloneElement(child as ChildElement, { open })
+            : child;
+          })}
       </Box>
     </Drawer>
 

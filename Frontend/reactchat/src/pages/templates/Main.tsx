@@ -1,10 +1,12 @@
 import { Box, Typography } from "@mui/material"
 import { useTheme } from "@emotion/react";
 
+type Props = {
+    children: ReactNode;
+};
 
 
-
-const Main = () => {
+const Main: React.FC<Props> = ({ children }) => {
     const theme = useTheme();
 
     return (
@@ -15,11 +17,7 @@ const Main = () => {
             mt: `${theme.primaryAppBar.height}px`,
             overflow: "hidden"
         }}>
-            {[...Array(50)].map((_,i) => (
-            <Typography key={i} paragraph>
-                {i+1}
-            </Typography>
-        ))}
+            {children}
         </Box>
 
     )

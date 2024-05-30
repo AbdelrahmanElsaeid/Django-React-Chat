@@ -5,8 +5,10 @@ import PrimaryDraw from './templates/PrimaryDraw'
 import SecondaryDraw from './templates/SecondaryDraw'
 import Main from './templates/Main'
 import PopularChannels from '../components/PrimaryDraw/PopularChannels'
+// import ExploreCategories from '../components/PrimaryDraw/SecondaryDraw/ExploreCategories'
 import ExploreServers from '../components/Main/ExploreServers'
 import ExploreCategories from '../components/SecondaryDraw/ExploreCategories'
+
 
 
 

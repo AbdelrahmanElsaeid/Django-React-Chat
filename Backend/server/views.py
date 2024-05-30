@@ -1,12 +1,19 @@
 from django.shortcuts import render
 from django.db.models import Count
 from rest_framework import viewsets
-from .models import Server
+from .models import Server,Category
 from .serializer import ServerSerializer, CategorySerializer
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError,AuthenticationFailed
 # Create your views here.
 
+class CategoryListViewSet(viewsets.ViewSet):
+    queryset = Category.objects.all()
+    
+    
+    def list(self, request):
+        serializer = CategorySerializer(self.queryset, many=True)
+        return Response(serializer.data)
 
 
 class ServerListViewSet(viewsets.ViewSet):
@@ -25,7 +32,7 @@ class ServerListViewSet(viewsets.ViewSet):
             raise AuthenticationFailed()
 
         if category:
-            self.queryset.filter(category=category)
+            self.queryset.filter(category__name=category)
 
         if qty:
             self.queryset=self.queryset[: int(qty)]

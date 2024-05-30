@@ -3,8 +3,8 @@ import { useTheme } from '@emotion/react'
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu"
 import { useEffect, useState } from "react";
-
-
+import ExploreCategories from "../../components/SecondaryDraw/ExploreCategories";
+import AccountButton from "../../components/PrimaryAppBar/AccountButton";
 
 const PrimaryAppBar = () => {
     const theme = useTheme();
@@ -27,7 +27,17 @@ const PrimaryAppBar = () => {
             return;
     }
         setSideMenu(open);
-    } 
+    };
+    
+    const list = () => (
+        <Box sx={{paddingTop: `${theme.primaryAppBar.height}px`, minWidth: 200}}
+            role="presentation"
+            onClick={toggleDrawer(false)}
+            onkeydown={toggleDrawer(false)}>
+                <ExploreCategories />
+
+        </Box>
+    )
 
     return  (
         <AppBar sx={{ 
@@ -47,24 +57,23 @@ const PrimaryAppBar = () => {
                         </IconButton>
                     </Box>
                     <Drawer anchor="left" open={sideMenu} >
-                        {[...Array(100)].map((_,i) => (
-                            <Typography key={i} paragraph>
-                                {i+1}
-                            </Typography>
-                        ))}
+                        {list()}
 
 
                     </Drawer>
-                    <Link to="/"  underline="none" color="inherit"></Link>
-                    <Typography
-                        varient="h6"
-                        noWrap
-                        component="div" 
-                        sx={{display:{fontWeight: 700, letterSpacing: "-0.5px"}}}
-                        >
-                        DJChat
+                    <Link to="/"  underline="none" color="inherit">
+                        <Typography
+                            varient="h6"
+                            noWrap
+                            component="div" 
+                            sx={{display:{fontWeight: 700, letterSpacing: "-0.5px"}}}
+                            >
+                            DJChat
 
-                    </Typography>
+                        </Typography>
+                    </Link>
+                    <Box sx={{ flexGrow: 1}}></Box>
+                    <AccountButton />
                  </Toolbar>
         </AppBar>
 
